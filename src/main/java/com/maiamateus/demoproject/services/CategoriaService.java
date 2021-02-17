@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.maiamateus.demoproject.domain.Categoria;
 import com.maiamateus.demoproject.repositories.CategoriaRepository;
+import com.maiamateus.demoproject.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -14,6 +15,10 @@ public class CategoriaService {
 	
 	public Categoria buscar(Integer id) {
 		Categoria obj = repo.findById(id).orElse(null);
+		if(obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
+					+ ", Tipo: " + Categoria.class.getName());
+		}
 		return obj;
 	}
 }
