@@ -2,8 +2,8 @@ package com.maiamateus.demoproject.domain.enums;
 
 public enum TipoCliente {
 
-	PESSOAFISICA(0, "Pessoa física"),
-	PESSOAJURIDICA(1, "Pessoa jurídica");
+	PESSOAFISICA(1, "Pessoa física"),
+	PESSOAJURIDICA(2, "Pessoa jurídica");
 	
 	private Integer cod;
 	private String descricao;
