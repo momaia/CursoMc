@@ -1,7 +1,10 @@
 package com.maiamateus.demoproject.domain;
 
+import javax.persistence.Entity;
+
 import com.maiamateus.demoproject.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento{
 	private static final long serialVersionUID = 1L;
 
