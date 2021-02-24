@@ -13,6 +13,7 @@ import com.maiamateus.demoproject.domain.Cidade;
 import com.maiamateus.demoproject.domain.Cliente;
 import com.maiamateus.demoproject.domain.Endereco;
 import com.maiamateus.demoproject.domain.Estado;
+import com.maiamateus.demoproject.domain.ItemPedido;
 import com.maiamateus.demoproject.domain.Pagamento;
 import com.maiamateus.demoproject.domain.PagamentoComBoleto;
 import com.maiamateus.demoproject.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.maiamateus.demoproject.repositories.CidadeRepository;
 import com.maiamateus.demoproject.repositories.ClienteRepository;
 import com.maiamateus.demoproject.repositories.EnderecoRepository;
 import com.maiamateus.demoproject.repositories.EstadoRepository;
+import com.maiamateus.demoproject.repositories.ItemPedidoRepository;
 import com.maiamateus.demoproject.repositories.PagamentoRepository;
 import com.maiamateus.demoproject.repositories.PedidoRepository;
 import com.maiamateus.demoproject.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class DemoprojectApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoprojectApplication.class, args);
@@ -119,6 +124,19 @@ public class DemoprojectApplication implements CommandLineRunner{
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
