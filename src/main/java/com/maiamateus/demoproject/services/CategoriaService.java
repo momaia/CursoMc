@@ -1,10 +1,12 @@
 package com.maiamateus.demoproject.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.maiamateus.demoproject.domain.Categoria;
 import com.maiamateus.demoproject.repositories.CategoriaRepository;
+import com.maiamateus.demoproject.services.exceptions.DataIntegrityException;
 import com.maiamateus.demoproject.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,5 +31,15 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos vinculados");
+		}
 	}
 }
